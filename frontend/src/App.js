@@ -1,54 +1,50 @@
 import { useEffect } from "react";
+import Lenis from "lenis";
 import "@/App.css";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
-import axios from "axios";
-import { HOME } from "@/constants/testIds";
+import { Toaster } from "@/components/ui/sonner";
+import Grain from "@/components/sections/Grain";
+import Navbar from "@/components/sections/Navbar";
+import Hero from "@/components/sections/Hero";
+import Ribbon from "@/components/sections/Ribbon";
+import Services from "@/components/sections/Services";
+import FeaturedEvents from "@/components/sections/FeaturedEvents";
+import WhyUs from "@/components/sections/WhyUs";
+import HowItWorks from "@/components/sections/HowItWorks";
+import Testimonials from "@/components/sections/Testimonials";
+import ContactForm from "@/components/sections/ContactForm";
+import Footer from "@/components/sections/Footer";
 
-const BACKEND_URL = process.env.REACT_APP_BACKEND_URL;
-const API = `${BACKEND_URL}/api`;
-
-const Home = () => {
-  const helloWorldApi = async () => {
-    try {
-      const response = await axios.get(`${API}/`);
-      console.log(response.data.message);
-    } catch (e) {
-      console.error(e, `errored out requesting / api`);
-    }
-  };
-
+function App() {
   useEffect(() => {
-    helloWorldApi();
+    const lenis = new Lenis({ duration: 1.1, smoothWheel: true });
+    let raf;
+    const loop = (t) => {
+      lenis.raf(t);
+      raf = requestAnimationFrame(loop);
+    };
+    raf = requestAnimationFrame(loop);
+    return () => {
+      cancelAnimationFrame(raf);
+      lenis.destroy();
+    };
   }, []);
 
   return (
-    <div>
-      <header className="App-header">
-        <a
-          data-testid={HOME.emergentLink}
-          className="App-link"
-          href="https://emergent.sh"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <img src="https://avatars.githubusercontent.com/in/1201222?s=120&u=2686cf91179bbafbc7a71bfbc43004cf9ae1acea&v=4" />
-        </a>
-        <p className="mt-5">Building something incredible ~!</p>
-      </header>
-    </div>
-  );
-};
-
-function App() {
-  return (
     <div className="App">
-      <BrowserRouter>
-        <Routes>
-          <Route path="/" element={<Home />}>
-            <Route index element={<Home />} />
-          </Route>
-        </Routes>
-      </BrowserRouter>
+      <Grain />
+      <Navbar />
+      <main>
+        <Hero />
+        <Ribbon />
+        <Services />
+        <FeaturedEvents />
+        <WhyUs />
+        <HowItWorks />
+        <Testimonials />
+        <ContactForm />
+      </main>
+      <Footer />
+      <Toaster position="top-center" theme="dark" richColors />
     </div>
   );
 }
