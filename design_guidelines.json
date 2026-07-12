@@ -1,0 +1,135 @@
+{
+  "theme": "dark",
+  "rationale": "Deep cinematic dark mode is selected to merge the exclusivity and mystery of 'Luxury/Premium' with the stadium-night intensity of 'Energetic/Bold' sports. We are using Archetype 2 (The Performance Pro) combined with Archetype 5 (Luxury) elements.",
+  "typography": {
+    "heading_font": "Outfit",
+    "body_font": "Manrope",
+    "rationale": "Outfit (sans-serif) offers geometric, wide, and aggressive styling for massive sports-impact headlines without feeling like a generic template. Manrope provides crisp, technical legibility for body text, ensuring a premium finish.",
+    "hierarchy_rules": [
+      "H1 (Hero): text-5xl sm:text-6xl md:text-7xl font-bold tracking-tighter leading-[1.1]. Never exceed this size.",
+      "H2 (Section): text-4xl sm:text-5xl font-semibold tracking-tight leading-none.",
+      "H3 (Card): text-2xl font-medium tracking-tight.",
+      "Overlines/Labels: text-xs md:text-sm uppercase tracking-[0.2em] font-bold text-[#DFFF00].",
+      "Body: text-base text-gray-400 leading-relaxed."
+    ]
+  },
+  "colors": {
+    "background": "#050505",
+    "foreground": "#FFFFFF",
+    "primary": "#DFFF00",
+    "primary_foreground": "#000000",
+    "secondary": "#1A1A1A",
+    "secondary_foreground": "#FFFFFF",
+    "card": "#0A0A0A",
+    "border": "rgba(255, 255, 255, 0.08)",
+    "accent": "#0044FF",
+    "rules": [
+      "No pure #000000. Base background is #050505 (Deep Obsidian).",
+      "No generic full-screen gradients. Color exists only to guide action.",
+      "Use #DFFF00 (Volt Yellow) for primary CTAs and active states, paired with pure black text for maximum contrast.",
+      "Use #0044FF (Electric Blue) sparingly as an accent for links or subtle gradient blooms behind images."
+    ]
+  },
+  "visual_enhancers": {
+    "surfaces": [
+      "Sticky Header: Crystal Glass (bg-black/40 backdrop-blur-xl border-b border-white/10).",
+      "Cards (Featured Events): 1px border-white/10 with #0A0A0A background. On hover, apply an inner glow or elevate shadow.",
+      "Hero Overlay: bg-gradient-to-r from-[#050505] via-[#050505]/70 to-transparent. Let the background image breathe on the right side."
+    ],
+    "textures": "Apply a subtle global SVG noise/grain overlay (mix-blend-overlay, opacity-10) to kill digital flatness and create a premium print/film vibe.",
+    "borders": "Expose the skeleton on the Features/Services grid by using border-collapse style layouts with 1px border-border/40 separating items."
+  },
+  "components": [
+    "Hero Section: Pure Tailwind HTML (no Shadcn). Overlapping bento items, massive typography.",
+    "Marquee: Use 'react-fast-marquee' for the 'Editorial Ribbon' of partnered events.",
+    "Featured Events Bento Grid: Pure Tailwind grid.",
+    "Contact Form: Shadcn UI (Input, Textarea, Button), stripped of vercel defaults. Input background #111, border #333, text #FFF. Focus state ring should be Volt Yellow (#DFFF00).",
+    "Icons: lucide-react (stroke-width 1.5 for a sharper, premium look)."
+  ],
+  "grids_layouts": {
+    "hero": "Asymmetrical split. Text heavily anchored to the left taking 60% width, allowing the background action image to dominate the right.",
+    "bento_grid": "MODE A: 'Tetris' Grid for Events. Base: grid-cols-1 md:grid-cols-8 lg:grid-cols-12 gap-6 md:gap-8.",
+    "bento_spans": "Hero Event (Football): col-span-full lg:col-span-8 row-span-2. Square Events (Tennis/Tomorrowland): col-span-4 row-span-1. Tall Event (Olympics): col-span-4 row-span-2. Fillers: col-span-4 lg:col-span-4.",
+    "spacing": "Generous spacing. py-24 to py-32 for section wrappers. Container max-width should be expansive (max-w-[1400px]).",
+    "alignment": "Left-align dense text. Asymmetry creates tension. Avoid standard centered text blocks."
+  },
+  "motion": {
+    "scroll": "Install and use 'lenis' for smooth momentum scrolling. It gives the site a premium, heavy feel.",
+    "interactions": "Use 'framer-motion' for staggered entrance of the Bento Grid items (opacity 0 to 1, y: 20 to 0).",
+    "hover_states": "All buttons must scale (scale: 0.98) on click. Hovering on event cards should scale the background image slightly (scale: 1.05) and darken the overlay to reveal event dates."
+  },
+  "accessibility": {
+    "contrast": "Volt Yellow (#DFFF00) buttons must use black text to meet APCA contrast ratios.",
+    "testing": "All interactive elements (CTAs, form inputs, submit button) MUST include data-testid.",
+    "motion": "Respect prefers-reduced-motion via Framer Motion settings."
+  },
+  "media": {
+    "hero_background": {
+      "url": "https://images.unsplash.com/photo-1705593973313-75de7bf95b56?crop=entropy&cs=srgb&fm=jpg&ixid=M3w3NDk1NzZ8MHwxfHNlYXJjaHwzfHxzdGFkaXVtJTIwY3Jvd2QlMjBzcG9ydHMlMjBhY3Rpb258ZW58MHx8fHwxNzgzODk5NTExfDA&ixlib=rb-4.1.0&q=85",
+      "category": "Hero Section",
+      "description": "Stadium full of people watching a soccer game. Anchor to the right."
+    },
+    "event_tomorrowland": {
+      "url": "https://images.unsplash.com/photo-1537228783107-df09e892bdbb?crop=entropy&cs=srgb&fm=jpg&ixid=M3w3NDk1NzZ8MHwxfHNlYXJjaHwyfHxzdGFkaXVtJTIwY3Jvd2QlMjBzcG9ydHMlMjBhY3Rpb258ZW58MHx8fHwxNzgzODk5NTExfDA&ixlib=rb-4.1.0&q=85",
+      "category": "Bento Grid - Tomorrowland",
+      "description": "Group of people attending concert/festival."
+    },
+    "event_sports_general": {
+      "url": "https://images.unsplash.com/photo-1563299796-b729d0af54a5?crop=entropy&cs=srgb&fm=jpg&ixid=M3w3NDk1NzZ8MHwxfHNlYXJjaHwxfHxzdGFkaXVtJTIwY3Jvd2QlMjBzcG9ydHMlMjBhY3Rpb258ZW58MHx8fHwxNzgzODk5NTExfDA&ixlib=rb-4.1.0&q=85",
+      "category": "Bento Grid - Baseball/Olympics",
+      "description": "Sports action crowd."
+    },
+    "luxury_flight": {
+      "url": "https://images.unsplash.com/photo-1512100356356-de1b84283e18?crop=entropy&cs=srgb&fm=jpg&ixid=M3w4NjA1MDV8MHwxfHNlYXJjaHwxfHxsdXh1cnklMjB0cmF2ZWwlMjBsaWZlc3R5bGUlMjBmbGlnaHR8ZW58MHx8fHwxNzgzODk5NTExfDA&ixlib=rb-4.1.0&q=85",
+      "category": "Services - Flights",
+      "description": "Plane parked beside the trees on seashore."
+    },
+    "luxury_hospitality": {
+      "url": "https://images.unsplash.com/photo-1666307536243-a9bf2d66c51d?crop=entropy&cs=srgb&fm=jpg&ixid=M3w4NjA1MDV8MHwxfHNlYXJjaHwzfHxsdXh1cnklMjB0cmF2ZWwlMjBsaWZlc3R5bGUlMjBmbGlnaHR8ZW58MHx8fHwxNzgzODk5NTExfDA&ixlib=rb-4.1.0&q=85",
+      "category": "Services - Accommodation",
+      "description": "Table with food and glasses on it (Premium hospitality)."
+    },
+    "event_tennis_cricket": {
+      "url": "https://images.unsplash.com/photo-1665413811870-5b29a250f64a?crop=entropy&cs=srgb&fm=jpg&ixid=M3w4NjA1MDV8MHwxfHNlYXJjaHw0fHxzdGFkaXVtJTIwY3Jvd2QlMjBzcG9ydHMlMjBhY3Rpb258ZW58MHx8fHwxNzgzODk5NTExfDA&ixlib=rb-4.1.0&q=85",
+      "category": "Bento Grid - Cricket/Tennis",
+      "description": "A dense crowd of people in a stadium."
+    }
+  },
+  "3d_libraries": {
+    "recommendation": "Not strictly required for this conversion-heavy landing page. Rely on high-quality 2D imagery with Framer Motion parallax to keep performance high. If you implement 3D, use `framer-motion` 3D elements for ticket passes or VIP cards that tilt on mouse movement."
+  },
+  "instructions_to_main_agent": [
+    "Install `@fontsource/outfit` and `@fontsource/manrope`. Update Tailwind theme to use them.",
+    "Install `lucide-react`, `framer-motion`, `lenis` or `@studio-freight/react-lenis`, and `react-fast-marquee`.",
+    "Do NOT use standard HTML inputs. Use Shadcn Form, Input, and Button for the lead capture section.",
+    "Make sure the navbar is fixed, wrapped in `backdrop-blur-xl bg-black/40` and has a 1px `border-white/10` bottom border.",
+    "For the Bento grid, use raw Tailwind HTML (divs), not Shadcn cards. Use group/hover classes so when hovering over a card, the image scales and dark overlay intensifies.",
+    "For the Marquee, use a pale #1A1A1A background with pure white uppercase text, separated by star icons, drifting slowly.",
+    "Ensure the hero background image is absolutely positioned behind the hero text, with a horizontal gradient overlay so text is perfectly readable on the left.",
+    "Add `data-testid` to navigation links, the primary 'Get a Quote' buttons, and all form inputs.",
+    "Create a 'Noise' component (a fixed div with pointer-events-none and an SVG noise pattern background) overlaying the entire site."
+  ],
+  "UNIVERSAL GUIDELINES FOR MAIN AGENT": [
+    "You tend to converge toward generic, 'on distribution' outputs. Avoid this: make creative, distinctive frontends that surprise and delight.",
+    "Don't make generic centered layouts, simplistic gradients, and uniform styling.",
+    "Create depth through layered design elements with z-index hierarchy.",
+    "Use glass-morphism effects with backdrop filters (12-24px blur).",
+    "You MUST NOT apply universal transition. Eg: `transition: all`. Always add transitions for specific interactive elements.",
+    "You MUST NOT center align the app container, ie do not add `.App { text-align: center; }` in the css file.",
+    "Always use modern button styles like pill-shaped, or sharp button with interaction animations & color relevant to the app style.",
+    "NEVER: use AI assistant Emoji characters like 🤖🧠💭💡🔮🎯 etc for icons.",
+    "Every interaction needs micro-animations - hover states, transitions, parallax effects, and entrance animations. Static = dead.",
+    "Use 2-3x more spacing than feels comfortable. Cramped designs look cheap.",
+    "Subtle grain textures, noise overlays, custom cursors, selection states, and loading animations: separates good from extraordinary.",
+    "Missing categories (especially sponsor logos) = main agent will use placeholder text which is FORBIDDEN. ALWAYS use provided images or real icons.",
+    "Prioritize using pre-existing components from src/components/ui when applicable.",
+    "Use `sonner` for toasts located in `/app/src/components/ui/sonner.tsx`."
+  ],
+  "general_ui_ux_guidelines": [
+    "Optical Alignment > Mathematical Alignment.",
+    "Hover state text contrast MUST be maintained.",
+    "Do not use completely transparent backgrounds for drop-down menus or sticky navs. Content underneath will make text unreadable.",
+    "All interactive elements MUST include data-testid attribute.",
+    "Headings must have tight letter spacing, body text must have relaxed line-height."
+  ]
+}
