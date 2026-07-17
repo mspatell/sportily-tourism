@@ -73,6 +73,21 @@ export const SERVICES = [
 export const LIFESTYLE_IMG =
   "https://images.unsplash.com/photo-1764547167640-b3fa6406fd3c?crop=entropy&cs=srgb&fm=jpg&ixid=M3w3NTY2NzV8MHwxfHNlYXJjaHwxfHxoYXBweSUyMGZyaWVuZHMlMjB0cmF2ZWwlMjBhaXJwb3J0JTIwbGF1Z2hpbmd8ZW58MHx8fHwxNzgzOTAxMDM0fDA&ixlib=rb-4.1.0&q=85";
 
+export const GALLERY = [
+  { src: "https://images.unsplash.com/photo-1629217855633-79a6925d6c47?crop=entropy&cs=srgb&fm=jpg&ixid=M3w3NTY2NzV8MHwxfHNlYXJjaHwxfHxmb290YmFsbCUyMHN0YWRpdW0lMjBmYW5zJTIwbmlnaHR8ZW58MHx8fHwxNzgzODk5NjEzfDA&ixlib=rb-4.1.0&q=85", label: "Matchnight" },
+  { src: "https://images.unsplash.com/photo-1571003123894-1f0594d2b5d9?crop=entropy&cs=srgb&fm=jpg&ixid=M3w4NTYxODh8MHwxfHNlYXJjaHwyfHxsdXh1cnklMjB0cmF2ZWwlMjBkZXN0aW5hdGlvbiUyMGxpZmVzdHlsZXxlbnwwfHx8fDE3ODM1MDIyMjJ8MA&ixlib=rb-4.1.0&q=85", label: "The stay" },
+  { src: "https://images.unsplash.com/photo-1730739463889-34c7279277a9?crop=entropy&cs=srgb&fm=jpg&ixid=M3w4NjA1NzB8MHwxfHNlYXJjaHwyfHxjcmlja2V0JTIwc3RhZGl1bSUyMG1hdGNoJTIwY3Jvd2R8ZW58MHx8fHwxNzgzODk5NjEzfDA&ixlib=rb-4.1.0&q=85", label: "Full house" },
+  { src: "https://images.unsplash.com/photo-1543797414-a0c3ad076f7c?crop=entropy&cs=srgb&fm=jpg&ixid=M3w4NjA1NTN8MHwxfHNlYXJjaHwxfHxhaXJwbGFuZSUyMHdpbmRvdyUyMHNreSUyMGJyaWdodCUyMHRyYXZlbHxlbnwwfHx8fDE3ODM5MDEwMzR8MA&ixlib=rb-4.1.0&q=85", label: "In the air" },
+  { src: "https://images.unsplash.com/photo-1762503673365-2de429eeb667?crop=entropy&cs=srgb&fm=jpg&ixid=M3w4NTYxODh8MHwxfHNlYXJjaHwxfHxtdXNpYyUyMGZlc3RpdmFsJTIwY3Jvd2QlMjBsaWdodHMlMjB0b21vcnJvd2xhbmR8ZW58MHx8fHwxNzgzODk5NjEzfDA&ixlib=rb-4.1.0&q=85", label: "Mainstage" },
+  { src: "https://images.unsplash.com/photo-1498503403619-e39e4ff390fe?crop=entropy&cs=srgb&fm=jpg&ixid=M3w4NTYxODh8MHwxfHNlYXJjaHwzfHxsdXh1cnklMjB0cmF2ZWwlMjBkZXN0aW5hdGlvbiUyMGxpZmVzdHlsZXxlbnwwfHx8fDE3ODM1MDIyMjJ8MA&ixlib=rb-4.1.0&q=85", label: "The escape" },
+];
+
+export const CHAPTERS = [
+  { n: "01", title: "Access, not availability", body: "We work directly with federations, clubs and organisers — so you sit where the public sale never reaches." },
+  { n: "02", title: "Craft over checklist", body: "Every itinerary is built by hand around one thing: the moment you came for. Flights, stays and transfers bend to the fixture." },
+  { n: "03", title: "Presence, end to end", body: "A dedicated planner from first message to final whistle, and real people on the ground wherever the game takes you." },
+];
+
 export const RIBBON = [
   "FIFA World Cup", "Wimbledon", "The Olympics", "IPL", "NBA Finals",
   "Champions League", "Roland-Garros", "ICC World Cup", "Tomorrowland", "US Open",

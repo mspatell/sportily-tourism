@@ -7,8 +7,8 @@ export default function Footer() {
       <div className="max-w-7xl mx-auto px-6 lg:px-8 py-16 grid md:grid-cols-4 gap-10">
         <div className="md:col-span-2">
           <div className="flex items-center gap-2 mb-4">
+            <img src="/favicon.png" alt="Sportily" className="h-8 w-8" />
             <span className="font-heading text-2xl tracking-tight text-stone-900">Sportily</span>
-            <span className="h-1.5 w-1.5 rounded-full bg-amber-700 mt-1" />
           </div>
           <p className="text-stone-600 max-w-sm leading-relaxed">
             Sportily Tourism — sports & live-event travel experts. We make the dream trip happen,
@@ -22,6 +22,7 @@ export default function Footer() {
             <li><Link to="/services" className="hover:text-amber-700 transition-colors">Services</Link></li>
             <li><Link to="/about" className="hover:text-amber-700 transition-colors">About</Link></li>
             <li><Link to="/contact" className="hover:text-amber-700 transition-colors">Contact</Link></li>
+            <li><Link to="/admin/login" className="hover:text-amber-700 transition-colors">Admin</Link></li>
           </ul>
         </div>
         <div>

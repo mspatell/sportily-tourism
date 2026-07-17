@@ -30,8 +30,8 @@ export default function Navbar() {
     >
       <nav className="max-w-7xl mx-auto px-6 lg:px-8 h-20 flex items-center justify-between">
         <Link to="/" data-testid="logo" className="flex items-center gap-2">
+          <img src="/favicon.png" alt="Sportily" className="h-8 w-8" />
           <span className="font-heading text-2xl tracking-tight text-stone-900">Sportily</span>
-          <span className="h-1.5 w-1.5 rounded-full bg-amber-700 mt-1" />
         </Link>
 
         <div className="hidden md:flex items-center gap-9">
