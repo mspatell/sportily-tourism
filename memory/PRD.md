@@ -24,8 +24,18 @@ A travel agency ("Sportily Tourism") specializing in sports & live-event travel.
 - Capture leads via inquiry form persisted to DB.
 
 ## Implemented (2026-07-12)
-- Full landing page: Hero, event ribbon marquee, Services grid + visuals, Featured Events bento grid, Why Us, How It Works, Testimonials, Contact form, Footer.
+- v1 single-page dark landing site (Hero, ribbon, services, bento events, why-us, how-it-works, testimonials, contact, footer).
 - Inquiry API (create + list) with MongoDB persistence. Tested 100% backend + frontend.
+
+## Redesign (2026-07-13)
+- Switched to bright/soothing white/beige theme (stone-50 base, amber-700 accent, Playfair Display + Manrope).
+- Converted to MULTI-PAGE app with React Router + shared Layout (fixed glass Navbar + Footer, scroll-to-top on route change):
+  - / Home (split hero, marquee ribbon, top-3 event highlights, trust cards, CTA)
+  - /events (curated event bento grid)
+  - /services (alternating tickets/flights/accommodation/visas blocks)
+  - /about (story + values)
+  - /contact (split layout lead-capture form -> POST /api/inquiries)
+- Tested 100% backend + frontend (iteration_2).
 
 ## Backlog
 - P1: Email notifications on new inquiry (Resend/SendGrid) — needs API key from user.
