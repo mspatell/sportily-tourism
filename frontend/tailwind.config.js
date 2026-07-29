@@ -12,6 +12,35 @@ module.exports = {
         body: ['Manrope', 'system-ui', 'sans-serif'],
       },
       colors: {
+        // Brand navy — introduced by overriding the darkest stone shades so all
+        // existing `stone-900` headings/dark sections become brand navy.
+        stone: {
+          900: '#0F2C59',
+          950: '#0A1F42',
+        },
+        // Brand orange — mapped onto the `amber` scale so all existing
+        // `amber-*` accents/CTAs become the brand orange without code churn.
+        amber: {
+          50: '#FDF2E7',
+          100: '#FBE3C8',
+          200: '#F6C48E',
+          300: '#F1A557',
+          400: '#EC8F3B',
+          500: '#E67E22',
+          600: '#D66C13',
+          700: '#C05A17',
+          800: '#9E4A12',
+          900: '#7C3A10',
+        },
+        navy: {
+          DEFAULT: '#0F2C59',
+          light: '#1B3E76',
+          dark: '#0A1F42',
+        },
+        brand: {
+          DEFAULT: '#E67E22',
+          dark: '#C05A17',
+        },
         background: 'hsl(var(--background))',
         foreground: 'hsl(var(--foreground))',
         card: { DEFAULT: 'hsl(var(--card))', foreground: 'hsl(var(--card-foreground))' },

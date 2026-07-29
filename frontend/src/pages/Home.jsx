@@ -5,7 +5,8 @@ import { ArrowRight, ArrowUpRight, ShieldCheck, Gem, Headphones } from "lucide-r
 import Ribbon from "../components/Ribbon";
 import Reveal from "../components/Reveal";
 import MaskLines from "../components/MaskLines";
-import { EVENTS, GALLERY, CHAPTERS } from "../data/content";
+import { EVENTS, CHAPTERS } from "../data/content";
+import { GALLERY } from "../data/gallery";
 
 const HERO_IMG =
   "https://images.unsplash.com/photo-1629217855633-79a6925d6c47?crop=entropy&cs=srgb&fm=jpg&ixid=M3w3NTY2NzV8MHwxfHNlYXJjaHwxfHxmb290YmFsbCUyMHN0YWRpdW0lMjBmYW5zJTIwbmlnaHR8ZW58MHx8fHwxNzgzODk5NjEzfDA&ixlib=rb-4.1.0&q=85";
@@ -174,22 +175,26 @@ function Manifesto() {
 }
 
 function GalleryStrip() {
+  const newest = GALLERY.slice(-6).reverse();
   return (
     <section className="py-24 md:py-32">
-      <div className="max-w-7xl mx-auto px-6 lg:px-8 mb-12">
+      <div className="max-w-7xl mx-auto px-6 lg:px-8 mb-12 flex flex-col md:flex-row md:items-end md:justify-between gap-6">
         <Reveal>
           <p className="overline mb-4">Moments we made</p>
           <h2 className="text-3xl sm:text-4xl tracking-tight font-normal text-stone-900 max-w-2xl">From the tunnel to the mainstage.</h2>
         </Reveal>
+        <Link to="/gallery" className="inline-flex items-center gap-2 text-amber-700 font-semibold hover:gap-3 transition-all duration-200">
+          View full gallery <ArrowUpRight className="h-4 w-4" strokeWidth={2} />
+        </Link>
       </div>
       <div className="flex gap-6 overflow-x-auto px-6 lg:px-8 pb-6 snap-x [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
-        {GALLERY.map((g, i) => (
-          <Reveal key={i} delay={(i % 3) * 0.08}>
-            <div className={`group relative shrink-0 snap-start rounded-3xl overflow-hidden border border-stone-100 shadow-[0_10px_30px_rgb(0,0,0,0.06)] ${i % 2 === 0 ? "w-[300px] h-[400px]" : "w-[300px] h-[340px] mt-0 md:mt-14"}`}>
-              <img src={g.src} alt={g.label} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" />
+        {newest.map((g, i) => (
+          <Reveal key={g.src} delay={(i % 3) * 0.08}>
+            <Link to="/gallery" className={`group relative block shrink-0 snap-start rounded-3xl overflow-hidden border border-stone-100 shadow-[0_10px_30px_rgb(0,0,0,0.06)] ${i % 2 === 0 ? "w-[300px] h-[400px]" : "w-[300px] h-[340px] mt-0 md:mt-14"}`}>
+              <img src={g.src} alt={g.title} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" />
               <div className="absolute inset-0 bg-gradient-to-t from-stone-900/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-              <span className="absolute bottom-5 left-5 text-white font-heading text-xl opacity-0 group-hover:opacity-100 translate-y-2 group-hover:translate-y-0 transition-all duration-300">{g.label}</span>
-            </div>
+              <span className="absolute bottom-5 left-5 text-white font-heading text-xl opacity-0 group-hover:opacity-100 translate-y-2 group-hover:translate-y-0 transition-all duration-300">{g.title}</span>
+            </Link>
           </Reveal>
         ))}
       </div>
