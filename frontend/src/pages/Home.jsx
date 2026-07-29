@@ -8,7 +8,7 @@ import MaskLines from "../components/MaskLines";
 import { EVENTS, GALLERY, CHAPTERS } from "../data/content";
 
 const HERO_IMG =
-  "https://images.unsplash.com/photo-1554068865-24cecd4e34b8?crop=entropy&cs=srgb&fm=jpg&ixid=M3w3NTY2OTV8MHwxfHNlYXJjaHwxfHx0ZW5uaXMlMjBncmFuZCUyMHNsYW0lMjBjb3VydCUyMG1hdGNofGVufDB8fHx8MTc4Mzg5OTYxM3ww&ixlib=rb-4.1.0&q=85";
+  "https://images.unsplash.com/photo-1629217855633-79a6925d6c47?crop=entropy&cs=srgb&fm=jpg&ixid=M3w3NTY2NzV8MHwxfHNlYXJjaHwxfHxmb290YmFsbCUyMHN0YWRpdW0lMjBmYW5zJTIwbmlnaHR8ZW58MHx8fHwxNzgzODk5NjEzfDA&ixlib=rb-4.1.0&q=85";
 
 function Hero() {
   const ref = useRef(null);
@@ -88,7 +88,7 @@ function Hero() {
           <div className="relative rounded-[2rem] overflow-hidden shadow-[0_30px_80px_rgb(0,0,0,0.14)] h-[440px] lg:h-[560px]">
             <motion.img
               src={HERO_IMG}
-              alt="Tennis player mid-serve on clay"
+              alt="Football stadium under lights"
               style={{ y: imgY, scale: imgScale }}
               className="absolute inset-0 w-full h-[130%] object-cover"
             />
