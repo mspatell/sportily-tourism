@@ -36,6 +36,35 @@ JWT_ALGORITHM = "HS256"
 ADMIN_EMAIL = os.environ['ADMIN_EMAIL']
 ADMIN_PASSWORD = os.environ['ADMIN_PASSWORD']
 NOTIFY_EMAIL = os.environ['NOTIFY_EMAIL']
+WHATSAPP_NUMBER = os.environ.get('WHATSAPP_NUMBER', '917572997755')
+COMPANY_NAME = "Sportily Tourism Pvt. Ltd."
+COMPANY_TAGLINE = "We believe that travel brings knowledge, knowledge brings opportunity, and opportunity brings success."
+OFFICES = [
+    {
+        "label": "Head Office",
+        "city": "Ahmedabad, India",
+        "address": "202, Shivalik-9, opp. Vishnu Niwas Society, towards Passport Office, Off C G Road, Gulbai Tekra, Ahmedabad - 380006, Gujarat, India",
+        "phone": "+91 75729 97755",
+    },
+    {
+        "label": "USA Office",
+        "city": "Bloomfield, NJ",
+        "address": "676 Bloomfield Ave, Bloomfield, NJ - 07003, U.S.A.",
+        "phone": "+1 570 877 5929",
+    },
+    {
+        "label": "New Zealand Office",
+        "city": "Auckland",
+        "address": "4 Choice Avenue, Henderson, Auckland - 0612, New Zealand",
+        "phone": "+64 21 0270 1293",
+    },
+    {
+        "label": "Canada Office",
+        "city": "Toronto",
+        "address": "4 Wingreen Court, Toronto, Ontario M3B 1B9, Canada",
+        "phone": "+1 647-510-9183",
+    },
+]
 EMAIL_BASE_URL = "https://integrations.emergentagent.com"
 EMAIL_KEY = os.environ['EMERGENT_EMAIL_KEY']
 EMAIL_FROM_NAME = os.environ['EMAIL_FROM_NAME']
@@ -156,6 +185,19 @@ async def send_inquiry_notification(inquiry: Inquiry):
 @api_router.get("/")
 async def root():
     return {"message": "Sportily Tourism API is live"}
+
+
+@api_router.get("/config")
+async def get_config():
+    return {
+        "company": COMPANY_NAME,
+        "tagline": COMPANY_TAGLINE,
+        "whatsapp_number": WHATSAPP_NUMBER,
+        "whatsapp_link": f"https://wa.me/{WHATSAPP_NUMBER}",
+        "email": "info@sportilytourism.com",
+        "offices": OFFICES,
+    }
+
 
 
 @api_router.post("/inquiries", response_model=Inquiry)

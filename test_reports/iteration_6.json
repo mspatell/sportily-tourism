@@ -1,0 +1,26 @@
+{
+  "summary": "Frontend-only regression after global palette (navy #0F2C59 + orange #E67E22) & logo swap plus Home 'Moments we made' strip now sourcing from src/data/gallery.js. All 7 routes load (/, /events, /gallery, /services, /about, /contact, /admin/login) with correct data-testid roots. Brand tokens verified live: hero-quote-btn bg = rgb(192,90,23) (#C05A17 amber-700 -> brand dark orange), H1 color = rgb(15,44,89) (#0F2C59 brand navy). Favicon logo loads on Home and Admin login (naturalWidth=512). GalleryStrip on Home renders 6 newest images from GALLERY, all loaded (0 broken), each links to /gallery, plus 'View full gallery' link works. Hero CTAs navigate correctly (hero-quote-btn -> /contact, hero-events-btn -> /events). Gallery page: all 8 category filter testids present, football filter yields 3 items, lightbox opens on gallery-item-0. Contact form submit reaches contact-success. Admin login with admin@sportily.travel / Sportily@2026 reaches /admin and page-admin-dashboard renders. 12/12 home images load; 0 broken images.",
+  "backend_issues": {"critical": [], "minor": []},
+  "frontend_issues": {
+    "ui_bugs": [],
+    "integration_issues": [],
+    "design_issues": [
+      {"screen": "Contact page", "issues": ["Pre-existing React hydration warning: <span> rendered inside <option> in Contact.jsx line 105 select-event dropdown. This is from dev-tool instrumentation wrapping the option's text expression in a <span>. Not a regression from this iteration and does not break functionality, but option elements only accept text — should be reviewed."]}
+    ]
+  },
+  "test_report_links": ["/app/test_reports/iteration_6.json"],
+  "action_items": [],
+  "critical_code_review_comments": [
+    "Home.jsx still uses legacy Tailwind class names (amber-700, stone-900, stone-100) that visually resolve to the new brand palette only because tailwind.config.js overrides the amber and stone-900/950 scales. This is intentional and works, but is fragile — future devs may re-add amber utilities not realizing they mean brand orange. Recommend renaming to bg-brand / bg-brand-dark / text-navy over time.",
+    "index.css .overline uses @apply text-amber-700 — again works via config override but semantically misleading.",
+    "framer-motion prints repeated warning: 'container should have non-static position for scroll offset' from Hero useScroll ref target. Cosmetic but noisy — add `relative` to the section (it is already relative, so likely the parent wrapper). Low priority."
+  ],
+  "updated_files": [],
+  "success_rate": {"backend": "skipped", "frontend": "100%"},
+  "test_credentials": "admin@sportily.travel / Sportily@2026 — verified working",
+  "seed_data_creation": "None",
+  "retest_needed": false,
+  "should_main_agent_self_test": false,
+  "context_for_next_testing_agent": "Palette change is stable. Contact.jsx select-event <span>-in-<option> hydration warning is pre-existing dev instrumentation, not a regression. All primary flows (home CTAs, gallery filters, gallery lightbox, contact submit, admin login) confirmed working end-to-end via public URL.",
+  "rca of the issue": "No blocking issues found."
+}

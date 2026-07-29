@@ -30,6 +30,30 @@ def auth_headers(token):
     return {"Authorization": f"Bearer {token}", "Content-Type": "application/json"}
 
 
+# ---- Config ----
+def test_get_config(client):
+    r = client.get(f"{API}/config")
+    assert r.status_code == 200, r.text
+    d = r.json()
+    assert d["whatsapp_number"] == "917572997755"
+    assert d["whatsapp_link"] == "https://wa.me/917572997755"
+    assert isinstance(d.get("tagline"), str) and len(d["tagline"]) > 0
+    offices = d.get("offices")
+    assert isinstance(offices, list) and len(offices) == 4
+    for o in offices:
+        for k in ("label", "city", "address", "phone"):
+            assert k in o and o[k]
+    labels = [o["label"] for o in offices]
+    assert "Head Office" in labels
+    head = next(o for o in offices if o["label"] == "Head Office")
+    assert head["phone"].startswith("+91")
+    usa = next(o for o in offices if "USA" in o["label"])
+    assert usa["phone"].startswith("+1 570")
+    canada = next(o for o in offices if "Canada" in o["label"])
+    assert canada["phone"].startswith("+1 647")
+    assert any("New Zealand" in o["label"] for o in offices)
+
+
 # ---- Health ----
 def test_root(client):
     r = client.get(f"{API}/")

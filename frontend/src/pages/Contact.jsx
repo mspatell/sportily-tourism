@@ -1,8 +1,8 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import axios from "axios";
 import { motion } from "framer-motion";
 import { toast } from "sonner";
-import { Send, CheckCircle2, Mail, Phone, MapPin } from "lucide-react";
+import { Send, CheckCircle2, Mail, Phone, MapPin, MessageCircle, Building2 } from "lucide-react";
 import { Input } from "../components/ui/input";
 import { Textarea } from "../components/ui/textarea";
 import { Label } from "../components/ui/label";
@@ -15,6 +15,15 @@ export default function Contact() {
   const [form, setForm] = useState(empty);
   const [loading, setLoading] = useState(false);
   const [done, setDone] = useState(false);
+  const [config, setConfig] = useState(null);
+
+  useEffect(() => {
+    axios.get(`${API}/config`).then((r) => setConfig(r.data)).catch(() => {});
+  }, []);
+
+  const whatsappLink = `${config?.whatsapp_link || "https://wa.me/917572997755"}?text=${encodeURIComponent(
+    "Hi Sportily Tourism! I'd like to plan a sports trip."
+  )}`;
 
   const set = (k) => (e) => setForm({ ...form, [k]: e.target.value });
 
@@ -53,14 +62,21 @@ export default function Contact() {
             quote — tickets, flights, stays and visas — within 48 hours. No obligation.
           </p>
 
-          <div className="mt-10 rounded-3xl overflow-hidden shadow-[0_12px_40px_rgb(0,0,0,0.08)]">
-            <img src={LIFESTYLE_IMG} alt="Travellers on the tarmac" className="w-full h-56 object-cover" />
+          <a href={whatsappLink} target="_blank" rel="noopener noreferrer" data-testid="whatsapp-btn" className="mt-8 group inline-flex items-center gap-3 bg-[#25D366] text-white font-semibold px-6 py-3.5 rounded-full hover:brightness-95 active:scale-95 transition-transform duration-150">
+            <MessageCircle className="h-5 w-5" strokeWidth={2} /> Message us on WhatsApp
+          </a>
+
+          <div className="mt-6 rounded-3xl overflow-hidden shadow-[0_12px_40px_rgb(0,0,0,0.08)]">
+            <img src={LIFESTYLE_IMG} alt="Travellers on the tarmac" className="w-full h-52 object-cover" />
           </div>
 
-          <ul className="mt-8 space-y-3 text-stone-700">
-            <li className="flex items-center gap-3"><Mail className="h-4 w-4 text-amber-700" strokeWidth={1.5} /> hello@sportily.travel</li>
-            <li className="flex items-center gap-3"><Phone className="h-4 w-4 text-amber-700" strokeWidth={1.5} /> +1 (800) 555-0142</li>
-            <li className="flex items-center gap-3"><MapPin className="h-4 w-4 text-amber-700" strokeWidth={1.5} /> London · Dubai · Mumbai</li>
+          <p className="mt-6 text-stone-600 italic leading-relaxed">
+            {config?.tagline || "We believe that travel brings knowledge, knowledge brings opportunity, and opportunity brings success."}
+          </p>
+
+          <ul className="mt-6 space-y-3 text-stone-700">
+            <li className="flex items-center gap-3"><Phone className="h-4 w-4 text-amber-700" strokeWidth={1.5} /> +91 75729 97755</li>
+            <li className="flex items-center gap-3"><MapPin className="h-4 w-4 text-amber-700" strokeWidth={1.5} /> Ahmedabad · New Jersey · Auckland · Toronto</li>
           </ul>
         </div>
 
@@ -119,6 +135,35 @@ export default function Contact() {
           </div>
         </div>
       </div>
+
+      {/* Offices */}
+      <section className="max-w-7xl mx-auto px-6 lg:px-8 mt-24 md:mt-28">
+        <div className="mb-10">
+          <p className="overline mb-4">Find us worldwide</p>
+          <h2 className="font-heading text-3xl sm:text-4xl text-stone-900">Four offices, one mission.</h2>
+        </div>
+        <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
+          {(config?.offices || []).map((o, i) => (
+            <motion.div
+              key={o.label}
+              data-testid={`office-${i}`}
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ delay: i * 0.06 }}
+              className="bg-white rounded-3xl border border-stone-100 p-7 shadow-[0_8px_30px_rgb(0,0,0,0.04)] flex flex-col"
+            >
+              <Building2 className="h-7 w-7 text-amber-700 mb-4" strokeWidth={1.5} />
+              <p className="text-xs uppercase tracking-[0.16em] font-bold text-amber-700">{o.label}</p>
+              <h3 className="font-heading text-xl text-stone-900 mt-1 mb-3">{o.city}</h3>
+              <p className="text-stone-600 text-sm leading-relaxed flex-1">{o.address}</p>
+              <a href={`tel:${(o.phone || "").replace(/\s/g, "")}`} className="mt-4 inline-flex items-center gap-2 text-stone-800 font-medium text-sm hover:text-amber-700 transition-colors">
+                <Phone className="h-4 w-4 text-amber-700" strokeWidth={1.6} /> {o.phone}
+              </a>
+            </motion.div>
+          ))}
+        </div>
+      </section>
     </div>
   );
 }
