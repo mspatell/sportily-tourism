@@ -29,10 +29,10 @@ export default function Navbar() {
         scrolled ? "bg-white/70 backdrop-blur-xl backdrop-saturate-150 border-b border-stone-200/60" : "bg-transparent"
       }`}
     >
-      <nav className="max-w-7xl mx-auto px-6 lg:px-8 h-20 flex items-center justify-between">
-        <Link to="/" data-testid="logo" className="flex items-center gap-2">
-          <img src="/favicon.png" alt="Sportily" className="h-8 w-8" />
-          <span className="font-heading text-2xl tracking-tight text-stone-900">Sportily</span>
+      <nav className="max-w-7xl mx-auto px-6 lg:px-8 h-24 flex items-center justify-between">
+        <Link to="/" data-testid="logo" className="flex flex-col items-center leading-none">
+          <img src="/favicon.png" alt="Sportily Tourism" className="h-12 w-12 md:h-14 md:w-14" />
+          <span className="font-heading text-sm md:text-base tracking-tight text-stone-900 mt-1">Sportily Tourism</span>
         </Link>
 
         <div className="hidden md:flex items-center gap-9">
