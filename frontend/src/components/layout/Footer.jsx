@@ -19,6 +19,7 @@ export default function Footer() {
           <p className="overline mb-4">Explore</p>
           <ul className="space-y-2 text-sm text-stone-600">
             <li><Link to="/events" className="hover:text-amber-700 transition-colors">Events</Link></li>
+            <li><Link to="/gallery" className="hover:text-amber-700 transition-colors">Gallery</Link></li>
             <li><Link to="/services" className="hover:text-amber-700 transition-colors">Services</Link></li>
             <li><Link to="/about" className="hover:text-amber-700 transition-colors">About</Link></li>
             <li><Link to="/contact" className="hover:text-amber-700 transition-colors">Contact</Link></li>
