@@ -9,7 +9,12 @@ export default function Layout() {
   const lenisRef = useRef(null);
 
   useEffect(() => {
-    const lenis = new Lenis({ duration: 1.15, smoothWheel: true });
+    const lenis = new Lenis({
+      lerp: 0.1,
+      smoothWheel: true,
+      wheelMultiplier: 1,
+      touchMultiplier: 1.5,
+    });
     lenisRef.current = lenis;
     let raf;
     const loop = (t) => {
