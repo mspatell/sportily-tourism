@@ -44,3 +44,7 @@ A travel agency ("Sportily Tourism") specializing in sports & live-event travel.
 
 ## Next Tasks
 - Wire email delivery of inquiries once user provides email provider key.
+
+## Feature log
+- 2026-07-17: Email notifications on new inquiries (Emergent managed email → sportilytourism1@gmail.com); JWT admin auth + admin dashboard at /admin (login /admin/login, creds in test_credentials.md); favicon + navbar logo mark.
+- 2026-07-29: Award-level Home redesign (masked kinetic hero, parallax, manifesto, gallery strip); Lenis smooth-scroll fix (lerp config + official CSS); hero image switched to football; new Gallery page at /gallery (category filters + lightbox) driven by documented src/data/gallery.js placeholder for easy future additions; new amber globe+airplane logo mark (favicon + navbar/footer/admin) inspired by client's PDF logo.
