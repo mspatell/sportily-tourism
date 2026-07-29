@@ -30,9 +30,9 @@ export default function Navbar() {
       }`}
     >
       <nav className="max-w-7xl mx-auto px-6 lg:px-8 h-24 flex items-center justify-between">
-        <Link to="/" data-testid="logo" className="flex flex-col items-center leading-none">
+        <Link to="/" data-testid="logo" className="flex items-center gap-3">
           <img src="/favicon.png" alt="Sportily Tourism" className="h-12 w-12 md:h-14 md:w-14" />
-          <span className="font-heading text-sm md:text-base tracking-tight text-stone-900 mt-1">Sportily Tourism</span>
+          <span className="font-heading text-xl md:text-2xl tracking-tight text-stone-900">Sportily Tourism</span>
         </Link>
 
         <div className="hidden md:flex items-center gap-9">
