@@ -10,13 +10,14 @@ import uuid
 import asyncio
 from datetime import datetime, timezone, timedelta
 from typing import List, Optional
+from collections import defaultdict
 
 import bcrypt
+import boto3
 import jwt
 import httpx
 from fastapi import FastAPI, APIRouter, HTTPException, Depends, Request
 from starlette.middleware.cors import CORSMiddleware
-from motor.motor_asyncio import AsyncIOMotorClient
 from pydantic import BaseModel, Field, EmailStr, ConfigDict
 
 logging.basicConfig(
@@ -25,10 +26,13 @@ logging.basicConfig(
 )
 logger = logging.getLogger(__name__)
 
-# --- DB ---
-mongo_url = os.environ['MONGO_URL']
-client = AsyncIOMotorClient(mongo_url)
-db = client[os.environ['DB_NAME']]
+# --- DynamoDB ---
+dynamodb = boto3.resource(
+    "dynamodb",
+    region_name=os.environ.get("AWS_REGION", "us-east-1"),
+)
+users_table = dynamodb.Table("sportily_users")
+inquiries_table = dynamodb.Table("sportily_inquiries")
 
 # --- Config ---
 JWT_SECRET = os.environ['JWT_SECRET']
@@ -128,9 +132,11 @@ async def get_current_user(request: Request) -> dict:
         payload = jwt.decode(token, JWT_SECRET, algorithms=[JWT_ALGORITHM])
         if payload.get("type") != "access":
             raise HTTPException(status_code=401, detail="Invalid token type")
-        user = await db.users.find_one({"id": payload["sub"]}, {"_id": 0, "password_hash": 0})
+        resp = users_table.get_item(Key={"email": payload["email"]})
+        user = resp.get("Item")
         if not user:
             raise HTTPException(status_code=401, detail="User not found")
+        user.pop("password_hash", None)
         return user
     except jwt.ExpiredSignatureError:
         raise HTTPException(status_code=401, detail="Token expired")
@@ -199,11 +205,10 @@ async def get_config():
     }
 
 
-
 @api_router.post("/inquiries", response_model=Inquiry)
 async def create_inquiry(payload: InquiryCreate):
     inquiry = Inquiry(**payload.model_dump())
-    await db.inquiries.insert_one(inquiry.model_dump())
+    inquiries_table.put_item(Item=inquiry.model_dump())
     logger.info(f"New inquiry from {inquiry.email} for event={inquiry.event}")
     asyncio.create_task(send_inquiry_notification(inquiry))
     return inquiry
@@ -212,7 +217,8 @@ async def create_inquiry(payload: InquiryCreate):
 @api_router.post("/auth/login")
 async def login(payload: LoginRequest):
     email = payload.email.lower()
-    user = await db.users.find_one({"email": email})
+    resp = users_table.get_item(Key={"email": email})
+    user = resp.get("Item")
     if not user or not verify_password(payload.password, user["password_hash"]):
         raise HTTPException(status_code=401, detail="Invalid email or password")
     token = create_access_token(user["id"], user["email"])
@@ -226,16 +232,22 @@ async def me(current=Depends(get_current_user)):
 
 @api_router.get("/inquiries", response_model=List[Inquiry])
 async def list_inquiries(current=Depends(get_current_user)):
-    docs = await db.inquiries.find({}, {"_id": 0}).sort("created_at", -1).to_list(2000)
-    return [Inquiry(**d) for d in docs]
+    resp = inquiries_table.scan()
+    items = resp.get("Items", [])
+    items.sort(key=lambda x: x.get("created_at", ""), reverse=True)
+    return [Inquiry(**item) for item in items]
 
 
 @api_router.get("/inquiries/stats")
 async def inquiry_stats(current=Depends(get_current_user)):
-    total = await db.inquiries.count_documents({})
-    pipeline = [{"$group": {"_id": "$event", "count": {"$sum": 1}}}, {"$sort": {"count": -1}}]
-    by_event = await db.inquiries.aggregate(pipeline).to_list(100)
-    return {"total": total, "by_event": [{"event": b["_id"] or "Unspecified", "count": b["count"]} for b in by_event]}
+    resp = inquiries_table.scan()
+    items = resp.get("Items", [])
+    total = len(items)
+    counts: dict = defaultdict(int)
+    for item in items:
+        counts[item.get("event") or "Unspecified"] += 1
+    by_event = sorted([{"event": k, "count": v} for k, v in counts.items()], key=lambda x: -x["count"])
+    return {"total": total, "by_event": by_event}
 
 
 app.include_router(api_router)
@@ -251,13 +263,13 @@ app.add_middleware(
 
 @app.on_event("startup")
 async def startup():
-    await db.users.create_index("email", unique=True)
-    await db.users.create_index("id")
-    existing = await db.users.find_one({"email": ADMIN_EMAIL.lower()})
+    email = ADMIN_EMAIL.lower()
+    resp = users_table.get_item(Key={"email": email})
+    existing = resp.get("Item")
     if existing is None:
-        await db.users.insert_one({
+        users_table.put_item(Item={
             "id": str(uuid.uuid4()),
-            "email": ADMIN_EMAIL.lower(),
+            "email": email,
             "password_hash": hash_password(ADMIN_PASSWORD),
             "name": "Admin",
             "role": "admin",
@@ -265,10 +277,14 @@ async def startup():
         })
         logger.info("Seeded admin user")
     elif not verify_password(ADMIN_PASSWORD, existing["password_hash"]):
-        await db.users.update_one({"email": ADMIN_EMAIL.lower()}, {"$set": {"password_hash": hash_password(ADMIN_PASSWORD)}})
+        users_table.update_item(
+            Key={"email": email},
+            UpdateExpression="SET password_hash = :ph",
+            ExpressionAttributeValues={":ph": hash_password(ADMIN_PASSWORD)},
+        )
         logger.info("Updated admin password")
 
 
 @app.on_event("shutdown")
-async def shutdown_db_client():
-    client.close()
+async def shutdown():
+    pass
