@@ -46,6 +46,8 @@ export class InfraStack extends cdk.Stack {
       allowAllOutbound: true,
     });
     sg.addIngressRule(ec2.Peer.anyIpv4(), ec2.Port.tcp(22), "SSH");
+    sg.addIngressRule(ec2.Peer.anyIpv4(), ec2.Port.tcp(80), "HTTP");
+    sg.addIngressRule(ec2.Peer.anyIpv4(), ec2.Port.tcp(443), "HTTPS");
     sg.addIngressRule(ec2.Peer.anyIpv4(), ec2.Port.tcp(8000), "FastAPI");
 
     // --- EC2 Instance ---

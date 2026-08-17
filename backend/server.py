@@ -74,6 +74,15 @@ EMAIL_KEY = os.environ['EMERGENT_EMAIL_KEY']
 EMAIL_FROM_NAME = os.environ['EMAIL_FROM_NAME']
 
 app = FastAPI(title="Sportily Tourism API")
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_credentials=True,
+    allow_origins=os.environ.get('CORS_ORIGINS', '*').split(','),
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
+
 api_router = APIRouter(prefix="/api")
 
 
@@ -251,14 +260,6 @@ async def inquiry_stats(current=Depends(get_current_user)):
 
 
 app.include_router(api_router)
-
-app.add_middleware(
-    CORSMiddleware,
-    allow_credentials=True,
-    allow_origins=os.environ.get('CORS_ORIGINS', '*').split(','),
-    allow_methods=["*"],
-    allow_headers=["*"],
-)
 
 
 @app.on_event("startup")
