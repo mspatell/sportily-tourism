@@ -55,18 +55,21 @@ export class InfraStack extends cdk.Stack {
         ec2.InstanceClass.T2,
         ec2.InstanceSize.MICRO
       ),
-      machineImage: ec2.MachineImage.genericLinux({
-        "us-east-1": "ami-0c02fb55956c7d316", // Ubuntu 22.04 us-east-1
-      }),
+      machineImage: ec2.MachineImage.latestAmazonLinux2023(),
       securityGroup: sg,
       role: ec2Role,
       keyPair: ec2.KeyPair.fromKeyPairName(this, "KeyPair", "sportily-key"),
     });
 
+    // --- Elastic IP ---
+    const eip = new ec2.CfnEIP(this, "BackendEIP", {
+      instanceId: instance.instanceId,
+    });
+
     // --- Outputs ---
     new cdk.CfnOutput(this, "EC2PublicIP", {
-      value: instance.instancePublicIp,
-      description: "EC2 Public IP — use this as your backend host",
+      value: eip.ref,
+      description: "EC2 Elastic IP — use this as your backend host",
     });
 
     new cdk.CfnOutput(this, "UsersTableName", {
